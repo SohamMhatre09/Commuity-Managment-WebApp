@@ -1,128 +1,131 @@
 const express = require('express');
-const { authenticateJwt, SECRET } = require("../middleware/auth");
-const { User, Course} = require("../db");
+const { User, Event, AllEvents } = require("../db");
+const {authenticateJwt,
+  SECRET,jwt} = require("../middleware/auth");
 const router = express.Router();
 
-  router.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (user) {
-      res.status(403).json({ message: 'User already exists' });
-    } else {
-      const newUser = new User({ username, password });
-      await newUser.save();
-      const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
-      res.json({ message: 'User created successfully', token });
-    }
-  });
-  
-  router.post('/login', async (req, res) => {
-    const { username, password } = req.headers;
-    const user = await User.findOne({ username, password });
-    if (user) {
-      const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
-      res.json({ message: 'Logged in successfully', token });
-    } else {
-      res.status(403).json({ message: 'Invalid username or password' });
-    }
-  });
-  
-  router.get('/courses', authenticateJwt, async (req, res) => {
-    const courses = await Course.find({published: true});
-    res.json({ courses });
-  });
-  
-  router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
-    const course = await Course.findById(req.params.courseId);
-    console.log(course);
-    if (course) {
-      const user = await User.findOne({ username: req.user.username });
-      if (user) {
-        user.purchasedCourses.push(course);
-        await user.save();
-        res.json({ message: 'Course purchased successfully' });
-      } else {
-        res.status(403).json({ message: 'User not found' });
-      }
-    } else {
-      res.status(404).json({ message: 'Course not found' });
-    }
-  });
-  
-  router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
-    const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
-    if (user) {
-      res.json({ purchasedCourses: user.purchasedCourses || [] });
-    } else {
-      res.status(403).json({ message: 'User not found' });
-    }
-  });
-
-
-  //aDDING PATHS FOR ADMIN
-  router.get("/me", authenticateJwt, async (req, res) => {
-    const admin = await Admin.findOne({ username: req.user.username });
-    if (!admin) {
-      res.status(403).json({msg: "Admin doesnt exist"})
-      return
-    }
-    res.json({
-        username: admin.username
-    })
+router.post('/signup', async (req, res) => {
+  const { username, password, city, phone} = req.body;
+  const user = await User.findOne({ username });
+  if (user) {
+    res.status(403).json({ message: 'User already exists' });
+  } else {
+    const newUser = new User({ username, password, city, phone });
+    await newUser.save();
+    const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+    res.json({ message: 'User created successfully', token });
+  }
 });
 
-router.post('/signup', (req, res) => {
-    const { username, password } = req.body;
-    function callback(admin) {
-      if (admin) {
-        res.status(403).json({ message: 'Admin already exists' });
-      } else {
-        const obj = { username: username, password: password };
-        const newAdmin = new Admin(obj);
-        newAdmin.save();
+// create the routes for user for login
+router.post('/login',async (req, res) => {
+  const { username } = req.body;
+  const user = await User.findOne ({ username });
+  if (user) {
+    const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+    res.json({ message: 'Logged in successfully', token });
+  } else {
+    res.status(403).json({ message: 'Invalid username or password' });
+  }
+});
 
-        const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
-        res.json({ message: 'Admin created successfully', token });
-      }
-  
+router.get("/me", authenticateJwt, async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      return res.status(403).json({ msg: "User not found" });
     }
-    Admin.findOne({ username }).then(callback);
-  });
-  
-  router.post('/login', async (req, res) => {
-    const { username, password } = req.headers;
-    const admin = await Admin.findOne({ username, password });
-    if (admin) {
-      const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
-      res.json({ message: 'Logged in successfully', token });
-    } else {
-      res.status(403).json({ message: 'Invalid username or password' });
+    res.json({
+      username: user.username
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving user' });
+  }
+});
+router.post('/events', authenticateJwt, async (req, res) => {
+  const eventData = req.body;
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  });
-  
-  router.post('/courses', authenticateJwt, async (req, res) => {
-    const course = new Course(req.body);
-    await course.save();
-    res.json({ message: 'Course created successfully', courseId: course.id });
-  });
-  
-  router.put('/courses/:courseId', authenticateJwt, async (req, res) => {
-    const course = await Course.findByIdAndUpdate(req.params.courseId, req.body, { new: true });
-    if (course) {
-      res.json({ message: 'Course updated successfully' });
-    } else {
-      res.status(404).json({ message: 'Course not found' });
+    eventData.createdBy = user._id;
+    const newEvent = new Event(eventData);
+    await newEvent.save();
+    // Update user's created events
+    user.createdEvents.push(newEvent._id);
+    await user.save();
+    res.status(200).json({ message: 'Event created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating event' });
+  }
+});
+
+
+// Get all events
+router.get('/events', authenticateJwt, async (req, res) => {
+  try {
+    const events = await Event.find({});
+    res.json({ events });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving events' });
+  }
+});
+
+// Get a specific event by ID
+router.get('/events/:eventId', authenticateJwt, async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.eventId);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
     }
-  });
-  
-  router.get('/courses', authenticateJwt, async (req, res) => {
-    const courses = await Course.find({});
-    res.json({ courses });
-  });
-  
-  router.get('/course/:courseId', authenticateJwt, async (req, res) => {
-    const courseId = req.params.courseId;
-    const course = await Course.findById(courseId);
-    res.json({ course });
-  });
-  module.exports = router
+    res.json({ event });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving event' });
+  }
+});
+
+// Create a new event
+
+
+// Update an event by ID
+router.put('/events/:eventId', authenticateJwt, async (req, res) => {
+  try {
+    const event = await Event.findByIdAndUpdate(req.params.eventId, req.body, { new: true });
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    res.json({ message: 'Event updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error updating event' });
+  }
+});
+
+// Delete an event by ID
+router.delete('/events/:eventId', authenticateJwt, async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.eventId);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    // Check if the user is authorized to delete the event
+    if (event.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Unauthorized to delete this event' });
+    }
+    await event.deleteOne();
+    // Remove event from user's created events
+    const user = await User.findById(req.user._id);
+    user.createdEvents.pull(req.params.eventId);
+    await user.save();
+    res.status(200).json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting event' });
+  }
+});
+module.exports = router;
