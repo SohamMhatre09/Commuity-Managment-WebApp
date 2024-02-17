@@ -8,7 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/user", userRouter)
-
+app.get('/', async (req, res) => {
+    res.send("Welcome To API for GFG Hackathon");
+});
 try {
     mongoose.connect('mongodb+srv://eventmanager:eventmanager@eventmanager44.ihhelur.mongodb.net/', {dbName: "EventManager44" });
     console.log('MongoDB connected');
