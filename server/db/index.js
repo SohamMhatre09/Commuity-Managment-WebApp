@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
     username: String,
-    email:String,
     password: String,
     city: String,
-    state:String,
     phone: Number,
     joinedEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
     createdEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }]
@@ -31,16 +29,14 @@ const eventSchema = new mongoose.Schema({
             "Animal Welfare",
             "others"
         ],
-        default: "others" 
+        default: "others" // Set a default value if none provided
     },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
     //After event
     impactImageslink: [String],
     impactDescription: String,
-    hostingStatus: {
-        type: String,
-        enum: ["open", "closed"],
-        default: "open"
-    },
+    
 });
 
 const allEventsSchema = new mongoose.Schema({
