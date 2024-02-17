@@ -2,7 +2,6 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 
-
 const { authenticateJwt, SECRET } = require("../middleware/auth");
 const { User, Event, AllEvents } = require("../db");
 const router = express.Router();
@@ -80,18 +79,35 @@ router.post('/events', authenticateJwt, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    const existingEvent = await Event.findOne({ createdBy: user._id, name: eventData.name });
+    if (existingEvent) {
+      return res.status(400).json({ message: 'Event with the same title already exists for this user' });
+    }
+
     eventData.createdBy = user._id;
     const newEvent = new Event(eventData);
     await newEvent.save();
     // Update user's created events
     user.createdEvents.push(newEvent._id);
     await user.save();
+    // add the event in all events ( it does not matter how may events he creates all shall be added in all events )
+    const allEvents = await AllEvents.findOne({ createdBy: user._id });
+    if (!allEvents) {
+      const newAllEvents = new AllEvents({ createdBy: user._id });
+      newAllEvents.events.push(newEvent._id);
+      await newAllEvents.save();
+    } else {
+      allEvents.events.push(newEvent._id)
+      await allEvents.save();
+    }
     res.status(200).json({ message: 'Event created successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error creating event' });
   }
 });
+
 
 // Update an event by ID
 router.put('/events/:eventId', authenticateJwt, async (req, res) => {
@@ -153,5 +169,7 @@ router.delete('/events/:eventId', authenticateJwt, async (req, res) => {
   }
 
 });
+
+
 
 module.exports = router;
