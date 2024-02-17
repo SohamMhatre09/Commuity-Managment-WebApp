@@ -1,5 +1,5 @@
 {
-  "name": "gfg-hackathon-api",
+  "name": "gfg-hack-api",
   "version": "1.0.0",
   "description": "Description of your backend app",
   "main": "server/index.js",
