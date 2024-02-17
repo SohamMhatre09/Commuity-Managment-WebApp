@@ -4,7 +4,8 @@
   "description": "Description of your backend app",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "install": "npm install"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
