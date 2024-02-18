@@ -13,7 +13,7 @@ export default function App() {
     <div
       className="background-image"
       style={{
-        backgroundImage: `url("../public/background.jpg")`,
+        backgroundImage: `url("https://drive.google.com/file/d/1ahxF6hHCqeUjUR-6xf49gRo4g00Nt9Vf/view?usp=sharing")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
