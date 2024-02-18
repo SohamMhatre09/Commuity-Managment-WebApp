@@ -171,6 +171,25 @@ router.delete('/events/:eventId', authenticateJwt, async (req, res) => {
 
 });
 
+router.get('/events/:eventId', authenticateJwt, async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.eventId);
+    const user = await User.findOne({ username: req.user.username });
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    if (event.createdBy.equals(user._id)){
+      res.json({ event });
+    }
+    else{
+      return res.status(403).json({ message: 'Unauthorized to view this event' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving event' });
+  }
+});
+
 
 
 module.exports = router;
