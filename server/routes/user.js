@@ -59,13 +59,15 @@ router.get('/events', async (req, res) => {
 });
 
 // Get a specific event by ID
-router.get('/events/:eventId', authenticateJwt, async (req, res) => {
+router.get('/events/:eventId', async (req, res) => {
   try {
     const event = await Event.findById(req.params.eventId);
-    if (!event) {
+        if (!event) {
       return res.status(404).json({ message: 'Event not found' });
     }
-    res.json({ event });
+    else{
+      res.status(200).json({ event });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error retrieving event' });
@@ -170,26 +172,5 @@ router.delete('/events/:eventId', authenticateJwt, async (req, res) => {
   }
 
 });
-
-router.get('/events/:eventId', authenticateJwt, async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.eventId);
-    const user = await User.findOne({ username: req.user.username });
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    if (event.createdBy.equals(user._id)){
-      res.json({ event });
-    }
-    else{
-      return res.status(403).json({ message: 'Unauthorized to view this event' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error retrieving event' });
-  }
-});
-
-
 
 module.exports = router;
