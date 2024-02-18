@@ -94,9 +94,7 @@
 
   Web App Images
   
-  ![image](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/4b251f4f-ec67-49e9-a1cf-53dca596efe1)
-  ![Screenshot (80)](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/839f5925-905a-4442-95ce-56a29bd42c6b)
-  ![Screenshot (82)](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/c6ea19f2-eb9c-4623-a1aa-b01ba60f7385)
+  
 
   Android App Images
 
