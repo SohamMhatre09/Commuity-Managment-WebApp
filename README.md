@@ -33,7 +33,7 @@
       Enables CORS for cross-origin requests and includes JSON parsing middleware.
 
   8. Mobile App:
-       Cuurently the mobile version of the website only fetches and displaces all the events that are created by any user of the service.
+       Currently the mobile version of the website only fetches and displaces all the events that are created by any user of the service.
 
 ## Technology Stack:
 
@@ -45,7 +45,7 @@
   
   JSON Web Tokens (JWT): Used for user authentication and authorization.
 
-  Andoird app is made in java with a commmon API and DB which is same as for the website.
+  Android app is made in java with a commmon API and DB which is same as for the website.
   
 ## Description :
 
