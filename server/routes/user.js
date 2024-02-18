@@ -38,7 +38,8 @@ router.get("/me", authenticateJwt, async (req, res) => {
       return res.status(403).json({ msg: "User not found" });
     }
     res.json({
-      username: user.username
+      username: user.username,
+      id: user._id
     });
   } catch (error) {
     console.error(error);
