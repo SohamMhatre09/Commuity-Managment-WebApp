@@ -47,7 +47,7 @@ router.get("/me", authenticateJwt, async (req, res) => {
 });
 
 // Get all events
-router.get('/events', authenticateJwt, async (req, res) => {
+router.get('/events', async (req, res) => {
   try {
     const events = await Event.find({});
     res.json({ events });
