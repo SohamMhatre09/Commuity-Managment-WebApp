@@ -91,15 +91,25 @@
   The code is structured into multiple files, including user.js for user-related routes, index.js for the main server setup, and index.js in the db folder for defining Mongoose schemas.
 
 ## Screenshots
+
+  Web App Images
+  
   ![image](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/4b251f4f-ec67-49e9-a1cf-53dca596efe1)
   ![Screenshot (80)](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/839f5925-905a-4442-95ce-56a29bd42c6b)
   ![Screenshot (82)](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/c6ea19f2-eb9c-4623-a1aa-b01ba60f7385)
+
+  Android App Images
+
+  ![1708243824616](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/e2b9e337-37ed-4bf4-ae71-906df078b714)
+  ![1708243824605](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/673748ef-9517-414a-98f2-b5307472877f)
+  ![1708243824610](https://github.com/SohamMhatre09/HM0054_HACKMATRIX_WEB/assets/142141808/8d25e6ea-b1b8-4283-af17-67fce6bcacb6)
+
 
 
 
 ## Deployed URL
 
-  <Link>
+ (https://gfg-hack-api.azurewebsites.net/)
 
 ## Video URL
 
