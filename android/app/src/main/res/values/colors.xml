@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="col1">#FF80AB</color>
+    <color name="col2">#F4FF81</color>
+    <color name="col3">#FFD4EE</color>
+    <color name="col4">#E5E1DA</color>
+    <color name="col5">#FFD180</color>
+    <color name="col6">#A1EEBD</color>
+    <color name="col7">#F6F7C4</color>
+    <color name="col8">#F6D6D6</color>
+    <color name="col9">#80D8FF</color>
+    <color name="col10">#AEB1CE</color>
+    <color name="col11">#C5B1CD</color>
+    <color name="col12">#B5C4CD</color>
+    <color name="col13">#B1CDC2</color>
+    <color name="col14">#C9B1A8</color>
+    <color name="col15">#B3C9C6</color>
+    <color name="col16">#C2CDC5</color>
+    <color name="col17">#B3CAB1</color>
+    <color name="col18">#C5CDB1</color>
+    <color name="col19">#B1CDC9</color>
+    <color name="col20">#CDC5C2</color>
+
+
+    <color name="lightestGreen">#D8F3DC</color>
+    <color name="LighterGreen">#B7E4C7</color>
+    <color name="LightGreen">#95D5B2</color>
+    <color name="NormalGreen">#74C69D</color>
+    <color name="MediumGreen">#52B788</color>
+    <color name="DarkGreen">#40916C</color>
+    <color name="DarkerGreen">#2D6A4F</color>
+    <color name="DarkestGreen">#1B4332</color>
+    <color name="BlackGreen">#081C15</color>
+
+
+
+</resources>
