@@ -117,7 +117,13 @@ Backend URl
 
 ## Video URL
 
-  <Link>
+  App and web app demonstration :
+  
+  https://drive.google.com/file/d/1g_eukDP6wQEl6WDquslfsgI9A7xKpvgr/view?usp=drive_link
+
+  Final Intro Video :
+
+  https://drive.google.com/file/d/15m8KY4x0n3o4RWy73PAN_sFsMo_deo2K/view?usp=drive_link
 
 ## Remarks 
 
