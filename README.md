@@ -8,19 +8,26 @@
 
 ## Features :
 
-  User Authentication: Enables user signup and login with JWT token generation for subsequent authenticated requests.
+  1. User Authentication:
+     Enables user signup and login with JWT token generation for subsequent authenticated requests.
   
-  Event Management: Users can create, update, and delete events, with each event associated with the user who initiated it.
+  2. Event Management:
+     Users can create, update, and delete events, with each event associated with the user who initiated it.
   
-  All Events: Maintains a global list of all events created by any user.
+  3. All Events:
+     Maintains a global list of all events created by any user.
   
-  Authorization and Access Control: Routes are protected to ensure only authenticated users can access specific endpoints. Users can only perform actions on events they have created.
+  4. Authorization and Access Control:
+     Routes are protected to ensure only authenticated users can access specific endpoints. Users can only perform actions on events they have created.
   
-  Error Handling: Incorporates error handling for database errors, unauthorized access, and general server errors.
+  5. Error Handling:
+     Incorporates error handling for database errors, unauthorized access, and general server errors.
   
-  Express Router: Uses Express Router to modularize code and separate routes for user and event management.
+  6. Express Router:
+      Uses Express Router to modularize code and separate routes for user and event management.
   
-  CORS and JSON Parsing: Enables CORS for cross-origin requests and includes JSON parsing middleware.
+  7. CORS and JSON Parsing:
+      Enables CORS for cross-origin requests and includes JSON parsing middleware.
 
 ## Technology Stack:
 
