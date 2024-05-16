@@ -8,12 +8,14 @@ import CreateYourEvent from "./CreateYourEvent";
 import YourEvents from "./YourEvents";
 import "./index.css";
 import LandingPage from "./LandingPage";
+import bgimage from "./images/background.jpg";
+
 export default function App() {
   return (
     <div
       className="background-image"
       style={{
-        backgroundImage: `url("https://drive.google.com/file/d/1ahxF6hHCqeUjUR-6xf49gRo4g00Nt9Vf/view?usp=sharing")`,
+        backgroundImage: `url(${bgimage})`, // corrected backgroundImage assignment
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -22,7 +24,6 @@ export default function App() {
         overflow: "auto",
       }}
     >
-
       <Router>
         <ResponsiveAppBar />
         <Routes>
