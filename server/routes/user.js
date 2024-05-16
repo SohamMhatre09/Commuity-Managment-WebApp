@@ -21,8 +21,8 @@ router.post('/signup', async (req, res) => {
 
 // create the routes for user for login
 router.post('/login',async (req, res) => {
-  const { username } = req.body;
-  const user = await User.findOne ({ username });
+  const { username,password } = req.body;
+  const user = await User.findOne ({ username,password});
   if (user) {
     const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
     res.json({ message: 'Logged in successfully', token });
@@ -172,5 +172,6 @@ router.delete('/events/:eventId', authenticateJwt, async (req, res) => {
   }
 
 });
-
+// join event on join/event/:eventId
+// opt out of event
 module.exports = router;

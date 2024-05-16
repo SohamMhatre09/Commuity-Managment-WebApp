@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
-    //email: String,
+    email: String,
     city: String,
     phone: Number,
     joinedEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const eventSchema = new mongoose.Schema({
-    //To host event
     name: { type: String },
     date: String,
     location: String,
@@ -32,11 +31,13 @@ const eventSchema = new mongoose.Schema({
         ],
         default: "others" // Set a default value if none provided
     },
+    customTypeOfEvent:String,
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-
-    //After event
+    eventCompletion:Boolean,
     impactImageslink: [String],
     impactDescription: String,
+
+    joinedUsers:[{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
     
 });
 

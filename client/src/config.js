@@ -1,1 +1,1 @@
-export const BASE_URL = "https://gfg-hack-api.azurewebsites.net";
+export const BASE_URL = "http://localhost:3000";
